@@ -1,28 +1,38 @@
 # Mikro Dosya Merkezi
 
-GitHub Pages üzerinde çalıştırılabilecek mobil öncelikli dosya çalışma alanı.
+GitHub Pages üzerinde çalışan, mobil uyumlu dosya düzenleme alanı. Derleme adımı yoktur.
 
 ## Kurulum / yayın
-1. Bu klasörün içeriğini GitHub repository köküne yükleyin.
-2. GitHub: **Settings → Pages** bölümünden branch ve root klasörü seçin.
-3. Yayınlanan Pages URL'sini açın.
+1. Klasör içeriğini GitHub repository köküne yükle.
+2. **Settings → Pages** bölümünden branch ve root klasörü seç.
+3. Yayınlanan Pages adresini aç.
 
-## Bu pakette işlevsel olarak bulunanlar
-- Responsive navigasyon, dosya seçimi ve drag/drop
-- Metin/kod editörü, JSON formatlama, minify ve doğrulama
-- Görsel önizleme, parlaklık/kontrast/doygunluk, döndürme, boyutlandırma, PNG export
-- CSV temel görüntüleme ve export
-- Tarayıcı PDF görüntüleme ve CDN erişimiyle pdf-lib PDF merge
-- Mammoth ile DOCX düz metin çıkarımı
-- JSZip ile ZIP inceleme, dosya çıkarma ve seçili dosyaları ZIP oluşturma
-- Manifest ve basit app-shell service worker
+## Özellikler
+- Açık / koyu / sistem teması
+- **PDF:** satır metnini değiştirme, taşıma, silme, kesip yapıştırma; yazı, görsel/imza, kapatma, vurgulama; araya boş sayfa, yazı sayfası, görsel veya başka PDF'den sayfa ekleme; sıralama, kopyalama, silme, döndürme, kırpma, ayırma, birleştirme; geri al/yinele; normal ve güvenli (düzleştirilmiş) indirme; TXT çıkarma
+- **DOCX / PPTX:** yapıyı koruyarak paragraf düzenleme, ekleme, silme, bul-değiştir
+- **CSV / XLSX:** hücre, satır ve sütun düzenleme
+- **Metin/kod:** bul-değiştir, JSON araçları, HTML önizleme (scriptsiz), Windows-1254 okuma
+- **Görsel:** kırpma, döndürme, çevirme, boyut, ayarlar, yazı, kalem; PNG/JPG/WEBP
+- **ZIP:** metin dosyası düzenleme, ekleme, silme, yeniden adlandırma
 
 ## Sınırlamalar
-Bu, Master Talimatın bütün kabul testlerini tamamlamış üretim sürümü değildir. Excel/XLSX editörü, PPTX render, PDF page rearrange/annotate/OCR, PDF insert, RTF/ODT/ODS kapsamlı destek, sandbox HTML preview, metadata temizleme, güvenlik testleri ve gerçek cihaz/çevrimdışı doğrulama tamamlanmamıştır. UI bu işlevleri tam destekliyormuş gibi iddia etmez.
+- PDF metin düzenleme, eski yazının üstünü kapatıp yenisini yazar. Eski yazıyı dosyadan kaldırmak için **Güvenli indir** kullanılmalıdır (çıktıda metin seçilemez). Sonucu paylaşmadan önce kontrol et.
+- Orijinal PDF yazı tipi kullanılmaz. ğ, ş, ı, İ gibi harf içeren yeni yazılar görüntü olarak eklenir. Paragraf yeniden akışı yoktur.
+- OCR yoktur. Yalnızca yatay metin satırları algılanır. Parolalı PDF desteklenmez. Form alanları, yer imleri ve sayfalar arası bağlantılar korunmayabilir.
+- DOCX/PPTX için görsel önizleme yoktur.
+- XLSX kaydında stil, grafik ve bazı özellikler kaybolabilir (SheetJS Community). Formüller uygulamada yeniden hesaplanmaz. Orijinal dosyayı sakla.
+- DOC, PPT, ODT ve ODP desteklenmez.
+- Değişiklikler tarayıcıda saklanmaz; sayfayı kapatmadan indir.
 
-Bazı motorlar CDN üzerinden yüklenir (JSZip, pdf-lib, Mammoth); bu nedenle ilk yüklemede internet bağlantısı gerekir. Dosya içeriği CDN'e gönderilmez; CDN'den yalnızca motor scriptleri indirilir. Ağ denetimi yapılmadığı için mutlak gizlilik/telemetri garantisi olarak yorumlanmamalıdır.
+## Motorlar
+JSZip, pdf-lib, pdf.js ve SheetJS CDN'den ilk kullanımda indirilir, sonra service worker tarafından önbelleğe alınır. Dosya içeriği bir sunucuya gönderilmez.
 
 ## Dosyalar
-- `index.html`: uygulama
-- `manifest.webmanifest`: PWA manifest
-- `service-worker.js`: app shell cache
+- `index.html`, `css/style.css`
+- `js/core.js`: gezinme, tema, ortak yardımcılar
+- `js/pdf-editor.js`: PDF düzenleyici
+- `js/office.js`: DOCX/PPTX
+- `js/editors.js`: metin, tablo, görsel, ZIP
+- `service-worker.js`: yeni sürüm yayınlarken `CACHE` adını artır
+- `manifest.webmanifest`
